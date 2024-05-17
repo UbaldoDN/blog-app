@@ -1,0 +1,32 @@
+
+services:
+  snginx:
+    container_name: snginx
+    build:
+      context: .
+      dockerfile: ./DockerFiles/Nginx
+    ports:
+      - 80:80
+    volumes:
+      - ~/Sites/ubaldodiaznunez/blog-app/api/:/var/www/vhosts/blog-app/api/
+      - ~/Sites/ubaldodiaznunez/blog-app/provision/_config/nginx/docker.conf.d/:/etc/nginx/conf.d/
+    networks:
+      - blog-app
+  
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./DockerFiles/PHP
+    working_dir: /var/www/vhosts/blog-app/api
+    ports:
+      - 9000:9000
+    volumes:
+      - ~/Sites/ubaldodiaznunez/blog-app/api/:/var/www/vhosts/blog-app/api/
+    networks:
+      - blog-app
+  
+networks:
+  blog-app:
+    driver: bridge
+    
