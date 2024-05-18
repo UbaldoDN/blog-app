@@ -1,0 +1,195 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Blog Api",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/admin/authors": {
+            "get": {
+                "summary": "Get all authors",
+                "description": "Get all authors",
+                "operationId": "42ca771435ead8ca56a3bbde21fdf8a7",
+                "responses": {
+                    "200": {
+                        "description": "Get all authors"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Store one author",
+                "description": "Store one author",
+                "operationId": "2a6934d4bf498ff4c17304ce75e51cf0",
+                "responses": {
+                    "201": {
+                        "description": "Store one author"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/authors/{$authorId}": {
+            "get": {
+                "summary": "Get one author",
+                "description": "Get one author",
+                "operationId": "84d360abca01f4dc29cabf277b9d44ab",
+                "responses": {
+                    "200": {
+                        "description": "Get one author"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/authors/{$authorId}/post": {
+            "get": {
+                "summary": "Get one authors with posts",
+                "description": "Get one authors with posts",
+                "operationId": "79fa9d0c57d5fdc1dfc253a81c705fff",
+                "responses": {
+                    "200": {
+                        "description": "Get one authors with posts"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/authors/{$id}": {
+            "put": {
+                "summary": "Update an author",
+                "description": "Update an author",
+                "operationId": "e3c60942d23349777f3d0db932d6c314",
+                "responses": {
+                    "200": {
+                        "description": "Update an author"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/posts/{$id}/approve": {
+            "patch": {
+                "summary": "Approve one post",
+                "description": "Approve one post",
+                "operationId": "018007d8cbed60fe1662b64f7cbab0a0",
+                "responses": {
+                    "204": {
+                        "description": "Approve one post"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/login": {
+            "post": {
+                "summary": "Login an admin",
+                "description": "Login an admin",
+                "operationId": "927ab4f6c755977d98229a8d361263ec",
+                "responses": {
+                    "200": {
+                        "description": "Login successfully"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/logout": {
+            "post": {
+                "summary": "Logout an admin",
+                "description": "Logout an admin",
+                "operationId": "de3fe553e394fdbed1b9aae263ca22ed",
+                "responses": {
+                    "200": {
+                        "description": "Logout successfully"
+                    }
+                }
+            }
+        },
+        "/api/v1/author/login": {
+            "post": {
+                "summary": "Login an author",
+                "description": "Login an author",
+                "operationId": "9877b5c17e54bda9cb502eebdc35be83",
+                "responses": {
+                    "200": {
+                        "description": "Login successfully"
+                    }
+                }
+            }
+        },
+        "/api/v1/author/logout": {
+            "post": {
+                "summary": "Logout an author",
+                "description": "Logout an author",
+                "operationId": "b24275172333b776a41a80620ccb9865",
+                "responses": {
+                    "200": {
+                        "description": "Logout successfully"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/authors/posts": {
+            "get": {
+                "summary": "Get an author all post",
+                "description": "Get an author all post",
+                "operationId": "c7003f2079238db975ecc54635266c8d",
+                "responses": {
+                    "200": {
+                        "description": "Get an author all post"
+                    }
+                }
+            },
+            "post": {
+                "summary": "Store an post",
+                "description": "Store an post",
+                "operationId": "59b4deb3ffbd5f8c9330856a56067a1f",
+                "responses": {
+                    "201": {
+                        "description": "Store an post"
+                    }
+                }
+            }
+        },
+        "/api/v1/admin/authors/posts/{$id}": {
+            "get": {
+                "summary": "Get an author with one post",
+                "description": "Get an author with one post",
+                "operationId": "482bcec71a8b3dad68d022eb00209c4e",
+                "responses": {
+                    "200": {
+                        "description": "Get an author with one post"
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update one post",
+                "description": "Update one post",
+                "operationId": "b1a47556bdba5ff656eb9d64b32cda1d",
+                "responses": {
+                    "204": {
+                        "description": "Update one post"
+                    }
+                }
+            }
+        },
+        "/api/v1/posts": {
+            "get": {
+                "summary": "Get all post",
+                "description": "Get all post",
+                "operationId": "5a796801ed2e8bd6a779c472ca9bc119",
+                "responses": {
+                    "200": {
+                        "description": "Get all post"
+                    }
+                }
+            }
+        },
+        "/api/v1/posts/{id}": {
+            "get": {
+                "summary": "Get an post with one author info",
+                "description": "Get an post with one author info",
+                "operationId": "21c6cb4ee6782867750db8e82d9d151d",
+                "responses": {
+                    "200": {
+                        "description": "Get an post with one author info"
+                    }
+                }
+            }
+        }
+    }
+}

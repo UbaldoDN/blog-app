@@ -25,6 +25,19 @@ services:
       - ~/Sites/ubaldodiaznunez/blog-app/api/:/var/www/vhosts/blog-app/api/
     networks:
       - blog-app
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./DockerFiles/App
+    working_dir: /app/blog
+    volumes:
+      - ~/Sites/ubaldodiaznunez/blog-app/app/blog/:/app/blog/
+    ports:
+      - "3000:3000"
+    networks:
+      - blog-app
   
 networks:
   blog-app:
