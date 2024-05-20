@@ -2,24 +2,15 @@
 
 namespace Tests\Feature\Http\Controllers\AuthorController;
 
-use App\Services\Auth\AuthorAuthService;
-use App\Services\Auth\Repositories\SessionRepository;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class GetPostTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        (new AuthorAuthService(new SessionRepository))->login(2, 'Author', 'author@example.com');
-    }
-
-    protected function tearDown(): void
-    {
-        (new AuthorAuthService(new SessionRepository))->logout();
-        parent::tearDown();
-    }
+    use RefreshDatabase;
 
     public function test_get_one_post()
     {
@@ -37,8 +28,15 @@ class GetPostTest extends TestCase
             ),
         ]);
 
+        $user = User::factory()->create([
+            'id' => 2,
+            'email' => 'author@example.com',
+            'role' => 'author'
+        ]);
+
+        Sanctum::actingAs($user);
+
         $response = $this->getJson('/api/v1/authors/posts/2');
-        
         $response
             ->assertStatus(200)
             ->assertJson([

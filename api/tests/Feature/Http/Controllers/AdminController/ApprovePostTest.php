@@ -2,25 +2,16 @@
 
 namespace Tests\Feature\Http\Controllers\AdminController;
 
-use App\Services\Auth\AdminAuthService;
-use App\Services\Auth\Repositories\SessionRepository;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ApprovePostTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        (new AdminAuthService(new SessionRepository))->login(1, 'Admin', 'admin@example.com');
-    }
-
-    protected function tearDown(): void
-    {
-        (new AdminAuthService(new SessionRepository))->logout();
-        parent::tearDown();
-    }
+    use RefreshDatabase;
 
     public function test_approved_post()
     {
@@ -30,7 +21,13 @@ class ApprovePostTest extends TestCase
                 'published_at' => Carbon::now(),
             ], 204),
         ]);
+        $user = User::factory()->create([
+            'id' => 1,
+            'email' => 'admin@example.com',
+            'role' => 'admin'
+        ]);
 
+        Sanctum::actingAs($user);
         $response = $this->patchJson('/api/v1/admin/posts/1/approve');
         $response->assertStatus(204);
     }

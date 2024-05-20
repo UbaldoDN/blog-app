@@ -39,6 +39,24 @@ services:
     networks:
       - blog-app
   
+  db:
+    container_name: db
+    platform: linux/x86_64
+    image: mysql:5.7
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: dev
+      MYSQL_ROOT_PASSWORD: 1234
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - ~/Sites/ubaldodiaznunez/blog-app/provision/_config/mysql/lib:/var/lib/mysql:cached
+      - ~/Sites/ubaldodiaznunez/blog-app/provision/_config/mysql/data:/var/lib/mysql
+      - ~/Sites/ubaldodiaznunez/blog-app/provision/_config/mysql/mysqld.cnf:/etc/mysql/conf.d/mysqld.cnf
+    networks:
+      - blog-app
+  
 networks:
   blog-app:
     driver: bridge

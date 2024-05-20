@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Services\Auth\AdminAuthService;
+use Illuminate\Http\Request;
 use App\Services\Logs\LogService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Auth;
 
 class AdminAuthController extends Controller
 {
-    public function __construct(protected AdminAuthService $adminAuthService, protected LogService $logService)
+    public function __construct(protected LogService $logService)
     {
         //
     }
@@ -25,9 +27,12 @@ class AdminAuthController extends Controller
      *     )
      * )
      */
-    public function login(): JsonResponse
+    public function login(Request $request): JsonResponse
     {
-        $this->adminAuthService->login(1, 'Admin', 'admin@example.com');
+        $credentials = $request->only('email', 'password');
+
+        dd(Auth::attempt($credentials));
+        /* $this->adminAuthService->login(1, 'Admin', 'admin@example.com');
         $data = [
             'id'    => $this->adminAuthService->getUserId(),
             'name'  => $this->adminAuthService->getName(),
@@ -45,7 +50,7 @@ class AdminAuthController extends Controller
             $data
         );
 
-        return $this->responseOk($data);
+        return $this->responseOk($data); */
     }
 
     /**

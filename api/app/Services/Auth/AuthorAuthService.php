@@ -2,47 +2,47 @@
 
 namespace App\Services\Auth;
 
-use App\Services\Auth\Repositories\SessionRepository;
+use App\Services\Auth\Repositories\AuthFacadeRepository;
 
 final class AuthorAuthService
 {
-    public function __construct(protected SessionRepository $sessionRepository)
+    public function __construct(protected AuthFacadeRepository $facadeRepository)
     {
         //
     }
 
     public function login(int $authorId, string $name, string $email)
     {
-        $this->sessionRepository->login($authorId, $name, $email, 'author');
+        $this->facadeRepository->login($authorId, $name, $email, 'author');
     }
 
     public function logout()
     {
-        $this->sessionRepository->logout();
+        $this->facadeRepository->logout();
     }
 
     public function isLoggedIn(): bool
     {
-        return $this->sessionRepository->isLoggedIn() !== null;
+        return $this->facadeRepository->isLoggedIn() !== null;
     }
 
     public function getUserId(): int | null
     {
-        return $this->sessionRepository->getUserId();
+        return $this->facadeRepository->getUserId();
     }
     
     public function getName(): string | null
     {
-        return $this->sessionRepository->getName();
+        return $this->facadeRepository->getName();
     }
 
     public function getEmail(): string | null
     {
-        return $this->sessionRepository->getEmail();
+        return $this->facadeRepository->getEmail();
     }
 
     public function getRole(): string | null
     {
-        return $this->sessionRepository->getRole();
+        return $this->facadeRepository->getRole();
     }
 }

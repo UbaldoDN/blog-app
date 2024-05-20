@@ -2,30 +2,29 @@
 
 namespace Tests\Feature\Http\Controllers\AuthorController;
 
-use App\Services\Auth\AuthorAuthService;
-use App\Services\Auth\Repositories\SessionRepository;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UpdatePostTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-        (new AuthorAuthService(new SessionRepository))->login(2, 'Author', 'author@example.com');
-    }
-
-    protected function tearDown(): void
-    {
-        (new AuthorAuthService(new SessionRepository))->logout();
-        parent::tearDown();
-    }
+    use RefreshDatabase;
 
     public function test_update_post()
     {
         Http::fake([
             'jsonplaceholder.typicode.com/posts/2' => Http::response(null, 204),
         ]);
+
+        $user = User::factory()->create([
+            'id' => 2,
+            'email' => 'author@example.com',
+            'role' => 'author'
+        ]);
+
+        Sanctum::actingAs($user);
 
         $response = $this->putJson('/api/v1/authors/posts/2', [
             'title' => 'Update Title Test Post 2',

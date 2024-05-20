@@ -2,25 +2,15 @@
 
 namespace Tests\Feature\Http\Controllers\AdminController;
 
-use App\Services\Auth\AdminAuthService;
-use App\Services\Auth\Repositories\SessionRepository;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
+use App\Models\User;
+use Laravel\Sanctum\Sanctum;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ListAuthorsTest extends TestCase
 {
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        (new AdminAuthService(new SessionRepository))->login(1, 'Admin', 'admin@example.com');
-    }
-
-    protected function tearDown(): void
-    {
-        (new AdminAuthService(new SessionRepository))->logout();
-        parent::tearDown();
-    }
+    use RefreshDatabase;
 
     public function test_list_all_authors()
     {
@@ -31,6 +21,14 @@ class ListAuthorsTest extends TestCase
                 ['id' => 3, 'name' => 'Clementine Bauch', 'email' => 'Nathan@yesenia.net'],
             ], 200),
         ]);
+
+        $user = User::factory()->create([
+            'id' => 1,
+            'email' => 'admin@example.com',
+            'role' => 'admin'
+        ]);
+
+        Sanctum::actingAs($user);
 
         $response = $this->getJson('/api/v1/admin/authors');
 
